@@ -1,12 +1,9 @@
-# Rendu Stack MEVM
+# Rendu NodeJs
 
 ## Installation
 
 Pour installer le projet
 
-### Serveur
-
-- \$ cd Server
 - configurer un .env
 - \$ npm install
 - \$ npm start
@@ -14,7 +11,7 @@ Pour installer le projet
 ## Fonctionnalités
 
 - Routes de connexion
-- Routes CR pour les parties
+- Routes CRD pour le chat
 - Vérification des champs
 
 ## Routes de l'api en GET
@@ -34,24 +31,23 @@ Pour installer le projet
         }
     }
 
-### api/game/
+### api/chat/
 
-**DESCRIPTION** Liste des routes disponibles pour le jeu
+**DESCRIPTION** Liste des routes disponibles pour Chat
 
     PARAMETRES D'ENTREE
-    @token             : String, Header
 
     PARAMETRE DE SORTE
     JSON {
         'Route': {
             '/': 'Liste des routes disponibles',
-            '/parties': 'CR des parties',
+            '/message': 'CRD des messages',
         }
     }
 
-### api/game/parties
+### api/chat/message
 
-**DESCRIPTION** Liste de l'ensembles des parties disponibles
+**DESCRIPTION** Liste de l'ensembles des messages disponibles
 
     PARAMETRES D'ENTREE
 
@@ -60,7 +56,7 @@ Pour installer le projet
         "message": "",
         "err": null,
         "data": {
-            "parties": [
+            "messages": [
                 {
 
                 },
@@ -116,18 +112,38 @@ Pour installer le projet
         }
     }
 
-### api/game/parties
+### api/chat/message
 
-**DESCRIPTION** Création d'une partie
+**DESCRIPTION** Création d'un message
 
     PARAMETRES D'ENTREE
-    @points            : String
-    @token             : String, Header
+    @message            : String
+    @token              : String
 
     PARAMETRE DE SORTE
     JSON {
         "message": "",
         "err": null,
         "data": {
+        }
+    }
+
+## Routes de l'api en DELETE
+
+### /api/auth/message
+
+**DESCRIPTION** Suppressiond d'un message (seulement si on est celui qui l'a soumit)
+
+    PARAMETRES D'ENTREE
+    @id                 : String
+    @token              : String
+
+    PARAMETRE DE SORTE
+    JSON {
+        "message": "",
+        "err": null,
+        "data": {
+            "n": 0,
+            "ok": 1
         }
     }
