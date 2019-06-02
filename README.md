@@ -6,10 +6,18 @@ Pour installer le projet
 
 ### Serveur
 
+- Start Mongodb in your computer
 - \$ cd Server
 - configurer un .env
-- \$ npm install
-- \$ npm start
+- \$ yarn install
+- \$ yarn start
+
+### PWA
+
+- \$ cd pwa
+- configurer un .env
+- \$ yarn install
+- \$ yarn serve
 
 ## Fonctionnalités
 
