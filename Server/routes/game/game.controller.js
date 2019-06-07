@@ -7,9 +7,13 @@ const GameModel = require("../../models/game.model");
 /*
 Functions
 */
-const getParties = body => {
+const getParties = (body, header) => {
   return new Promise((resolve, reject) => {
-    GameModel.find((error, parties) => {
+    const user = new UserModel().getJwt(header.authorization.split(' ')[1]);
+
+    GameModel.find({
+      idUser: user._id
+    }, (error, parties) => {
       if (error) reject(error);
       else if (!parties) reject("parties not found");
       else {

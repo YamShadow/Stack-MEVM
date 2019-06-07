@@ -50,7 +50,7 @@ class GameRouterClass {
         sendFieldsError(res, "Bad fields provided", miss, extra);
       }
       // Use controller function
-      getParties(req.body)
+      getParties(req.body, req.headers)
         .then(apiResponse =>
           sendApiSuccessResponse(res, "Parties collected", apiResponse)
         )
