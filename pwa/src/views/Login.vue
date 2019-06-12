@@ -55,12 +55,12 @@ export default {
         })
         .then(response => {
           console.log(response);
-          localStorage.setItem("token", response.data.access_token);
+          localStorage.setItem("token", response.data.token);
 
           this.axios.defaults.headers.common = {
             "X-Requested-With": "XMLHttpRequest",
             "Content-Type": "application/json",
-            Authorization: `Bearer ${response.data.access_token}`
+            Authorization: `Bearer ${response.data.token}`
           };
 
           this.$router.push("/");
