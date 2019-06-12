@@ -17,13 +17,11 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
 import SubmitRound from "@/components/inputs/SubmitRound.vue";
 
 export default {
   name: "home",
   components: {
-    HelloWorld,
     SubmitRound
   },
   data() {
