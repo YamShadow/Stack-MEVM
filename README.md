@@ -139,3 +139,9 @@ Pour installer le projet
         "data": {
         }
     }
+
+## Axe d'amélioration
+
+- Un respect des status HTTP
+  - Création avec un 201
+  - Erreur non en 200
