@@ -6,7 +6,6 @@ import mutations from "./mutations";
 
 const state = {
     appData: {
-        userID: false,
         user: false
     }
 };
