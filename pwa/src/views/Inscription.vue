@@ -87,9 +87,9 @@ export default {
                 })
                 .then(response => {
                   if (response.data.error == null) {
-                    localStorage.setItem("token", response.data.token);
+                    localStorage.setItem("token", response.data.data.token);
                     this.$store.dispatch("storeUser", {
-                      user: response.data.user
+                      user: response.data.data.user
                     });
 
                     this.axios.defaults.headers.common = {
