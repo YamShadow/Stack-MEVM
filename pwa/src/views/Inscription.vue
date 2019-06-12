@@ -17,9 +17,30 @@
           <span class="open-book">
             <p class="text-2xl leading-normal">Password</p>
             <input class="my-5" v-model="password" name="password" type="password" required>
-
-            <span class="text-red" v-if="error">{{ error }}</span>
           </span>
+          <span class="open-book">
+            <p class="text-2xl leading-normal">Prénom</p>
+            <input
+              class="my-5"
+              name="first_name"
+              v-model="first_name"
+              placeholder="Prénom"
+              type="text"
+              required
+            >
+          </span>
+          <span class="open-book">
+            <p class="text-2xl leading-normal">Nom</p>
+            <input
+              class="my-5"
+              name="last_name"
+              v-model="last_name"
+              placeholder="Nom"
+              type="text"
+              required
+            >
+          </span>
+          <span class="text-red" v-if="error">{{ error }}</span>
         </div>
         <SubmitRound text="Connexion" white></SubmitRound>
       </form>
@@ -55,24 +76,25 @@ export default {
           last_name: this.last_name
         })
         .then(response => {
-          if (response.status == 201) {
-            this.$store.dispatch("storeUserId", {
-              userID: response.data.id
+          console.log(response);
+          if (response.status == 200) {
+            //201
+            this.$store.dispatch("storeUser", {
+              user: response.data.data
             });
 
             this.axios
               .post("/api/auth/login", {
                 email: this.email,
-                password: this.password,
-                remember_me: true
+                password: this.password
               })
               .then(response => {
-                localStorage.setItem("token", response.data.access_token);
+                localStorage.setItem("token", response.data.token);
 
                 this.axios.defaults.headers.common = {
                   "X-Requested-With": "XMLHttpRequest",
                   "Content-Type": "application/json",
-                  Authorization: `Bearer ${response.data.access_token}`
+                  Authorization: `Bearer ${response.data.token}`
                 };
 
                 this.$router.push("/");
@@ -83,7 +105,7 @@ export default {
           }
         })
         .catch(errors => {
-          this.error = "Email déjà utilisé ou mots de passes non identiques";
+          this.error = "Email déjà utilisé";
         });
     }
   }
