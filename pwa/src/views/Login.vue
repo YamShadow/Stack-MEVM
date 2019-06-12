@@ -7,6 +7,7 @@
         <p class="text-2xl leading-tight">Password</p>
         <input class="my-5 w-1/3" v-model="password" name="password" type="password" required>
       </div>
+      <span class="text-red" v-if="error">{{ error }}</span>
       <div class="groupBouton mt-10">
         <SubmitRound text="Connexion" white></SubmitRound>
       </div>
@@ -54,16 +55,22 @@ export default {
           password: this.password
         })
         .then(response => {
-          console.log(response);
-          localStorage.setItem("token", response.data.token);
+          if (response.data.error == null) {
+            localStorage.setItem("token", response.data.token);
+            this.$store.dispatch("storeUser", {
+              user: response.data.user
+            });
 
-          this.axios.defaults.headers.common = {
-            "X-Requested-With": "XMLHttpRequest",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${response.data.token}`
-          };
+            this.axios.defaults.headers.common = {
+              "X-Requested-With": "XMLHttpRequest",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${response.data.token}`
+            };
 
-          this.$router.push("/");
+            this.$router.push("/");
+          } else {
+            this.error = response.data.error;
+          }
         })
         .catch(error => {
           this.$router.push("/login");

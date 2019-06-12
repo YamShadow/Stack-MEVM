@@ -76,32 +76,39 @@ export default {
           last_name: this.last_name
         })
         .then(response => {
-          console.log(response);
-          if (response.status == 200) {
-            //201
-            this.$store.dispatch("storeUser", {
-              user: response.data.data
-            });
+          if (response.data.error == null) {
+            if (response.status == 200) {
+              //Normalement cela devrait être une 201
 
-            this.axios
-              .post("/api/auth/login", {
-                email: this.email,
-                password: this.password
-              })
-              .then(response => {
-                localStorage.setItem("token", response.data.token);
+              this.axios
+                .post("/api/auth/login", {
+                  email: this.email,
+                  password: this.password
+                })
+                .then(response => {
+                  if (response.data.error == null) {
+                    localStorage.setItem("token", response.data.token);
+                    this.$store.dispatch("storeUser", {
+                      user: response.data.user
+                    });
 
-                this.axios.defaults.headers.common = {
-                  "X-Requested-With": "XMLHttpRequest",
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${response.data.token}`
-                };
+                    this.axios.defaults.headers.common = {
+                      "X-Requested-With": "XMLHttpRequest",
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${response.data.token}`
+                    };
 
-                this.$router.push("/");
-              })
-              .catch(error => {
-                this.$router.push("/login");
-              });
+                    this.$router.push("/");
+                  } else {
+                    this.$router.push("/login");
+                  }
+                })
+                .catch(error => {
+                  this.$router.push("/login");
+                });
+            }
+          } else {
+            this.error = responsa.data.error;
           }
         })
         .catch(errors => {
