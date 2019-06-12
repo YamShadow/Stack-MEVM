@@ -95,10 +95,10 @@ export default {
                     this.axios.defaults.headers.common = {
                       "X-Requested-With": "XMLHttpRequest",
                       "Content-Type": "application/json",
-                      Authorization: `Bearer ${response.data.token}`
+                      Authorization: `Bearer ${response.data.data.token}`
                     };
 
-                    this.$router.push("/");
+                    this.$router.push("/me");
                   } else {
                     this.$router.push("/login");
                   }

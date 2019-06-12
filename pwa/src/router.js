@@ -7,9 +7,17 @@ const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [{
-      path: '/',
+      path: '/me',
       name: 'home',
       component: () => import( /* webpackChunkName: "login" */ './views/Home.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/tap',
+      name: 'scores',
+      component: () => import( /* webpackChunkName: "login" */ './views/Score.vue'),
       meta: {
         requiresAuth: true
       }
@@ -39,8 +47,6 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    console.log('Here')
-    console.log(localStorage.getItem('token'))
     if (localStorage.getItem('token') == null) {
       next({
         path: '/login',
