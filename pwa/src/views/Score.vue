@@ -26,7 +26,6 @@ export default {
     this.axios
       .get("/api/game/parties")
       .then(response => {
-        console.log(response);
         this.parties = response.data.data.parties;
       })
       .catch(errors => {
@@ -44,7 +43,6 @@ export default {
         });
       }
     }
-  },
-  methods: {}
+  }
 };
 </script>
