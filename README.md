@@ -8,22 +8,32 @@ Pour installer le projet
 
 - Start Mongodb in your computer
 - \$ cd Server
-- configurer un .env
+- Configurer un .env
 - \$ yarn install
 - \$ yarn start
 
 ### PWA
 
 - \$ cd pwa
-- configurer un .env
 - \$ yarn install
 - \$ yarn serve
 
+**/!\ Si jamais le port du serveur est modifier, penser a changer le port de la baseURL dans le fichier main.js**
+
 ## Fonctionnalités
 
-- Routes de connexion
+- Routes CR de connexion
 - Routes CR pour les parties
 - Vérification des champs
+- Utilisation du Store (vuex)
+- Protection des routes (coté front)
+- Jeu fonctionnel
+
+## Axe d'amélioration
+
+- Un respect des statuts HTTP (tout passe en 200 actuellement)
+  - Création avec un 201
+  - Erreur non en 200
 
 ## Routes de l'api en GET
 
@@ -139,9 +149,3 @@ Pour installer le projet
         "data": {
         }
     }
-
-## Axe d'amélioration
-
-- Un respect des status HTTP
-  - Création avec un 201
-  - Erreur non en 200
