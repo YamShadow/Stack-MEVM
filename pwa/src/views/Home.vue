@@ -1,48 +1,73 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
+    <p>Clique sur le pointeur un maximum de fois en 10 secondes !</p>
+    <img alt="Click here" class="picture" @click="play" src="../assets/click.png">
     <div>
-      <a class="u-link-white mb-20" href="#" @click="toggleTimer">{{ time }}</a>
-      <div>
-        <a class="rounded-full py-2 px-4 bouton openSans font-bold" href="#" @click="reset">reset</a>
+      <p>
+        Temps restant :
+        <span class="font-bold">{{ time }} {{ (time == 1) ? 'seconde' : 'secondes' }}</span>
+      </p>
+      <p>
+        Nombre de points :
+        <span class="font-bold">{{ points }} points</span>
+      </p>
+      <div class="mt-4">
+        <a v-if="time == 0" class="bouton font-bold" href="#" @click="reset">Rejouer ?</a>
+        <router-link to="/tap" v-if="time == 0" class="bouton font-bold">Scores</router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-
 export default {
   name: "home",
   components: {},
   data() {
     return {
       time: 10,
+      points: 0,
       isRunning: false,
-      interval: null
+      interval: null,
+      error: null
     };
   },
   methods: {
-    toggleTimer() {
-      if (this.isRunning) {
-        clearInterval(this.interval);
-        console.log("timer stops");
-      } else {
-        this.interval = setInterval(this.incrementTime, 1000);
+    play() {
+      if (this.time > 0) {
+        if (!this.isRunning) {
+          this.isRunning = !this.isRunning;
+          this.interval = setInterval(this.incrementTime, 1000);
+        }
+        this.points++;
       }
-      this.isRunning = !this.isRunning;
     },
     incrementTime() {
       this.time = parseInt(this.time) - 1;
       if (this.time == 0) {
         clearInterval(this.interval);
         this.isRunning = !this.isRunning;
-        console.log("SAVVVVVVEE");
+        this.saveScore();
       }
     },
     reset() {
       this.time = 10;
+      this.points = 0;
+    },
+    saveScore() {
+      this.axios
+        .post("/api/game/parties", {
+          points: this.points
+        })
+        .then(response => {
+          if (response.data.error == null) {
+          } else {
+            this.error = response.data.error;
+          }
+        })
+        .catch(error => {
+          this.error = "Erreur durant le call AJAX";
+        });
     }
   }
 };
@@ -58,6 +83,13 @@ export default {
 .contrast {
   background-color: #4500b6;
   color: white;
+}
+
+.picture {
+  margin: 3rem auto;
+  size: 2rem;
+  height: 300px;
+  cursor: pointer;
 }
 </style>
 
