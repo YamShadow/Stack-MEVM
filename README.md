@@ -1,10 +1,14 @@
 # Rendu Stack MEVM
 
+Projet tournant sous la stack MEVM.
+
+Utilisation de vuejs pour permettre un isolement et créer une architecture back/front distincte. Projet ultra légé après compilation ( 952 Ko seulement )
+
 ## Installation
 
 Pour installer le projet
 
-### Serveur
+### Serveur (Node)
 
 - Start Mongodb in your computer
 - \$ cd Server
@@ -12,7 +16,7 @@ Pour installer le projet
 - \$ yarn install
 - \$ yarn start
 
-### PWA
+### PWA (VueJS)
 
 - \$ cd pwa
 - \$ yarn install
@@ -69,9 +73,10 @@ Pour installer le projet
 
 ### api/game/parties
 
-**DESCRIPTION** Liste de l'ensembles des parties disponibles
+**DESCRIPTION** Liste de l'ensembles des parties disponibles pour l'utilisateur connecté
 
     PARAMETRES D'ENTREE
+    @token             : String, Header
 
     PARAMETRE DE SORTE
     JSON {
